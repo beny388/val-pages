@@ -3,37 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Submission Rejected</title>
+  <title>Soumission Rejetée</title>
 </head>
 <body>
-  <h1>Submission Rejected</h1>
-  <form id="rejectForm">
-    <label for="reason">Reason for rejection:</label>
-    <input type="text" id="reason" name="reason" required>
-    <input type="hidden" id="city" name="city" value="">
-    <input type="hidden" id="name" name="name" value="">
-    <input type="hidden" id="profession" name="profession" value="">
-    <input type="submit" value="Submit">
-  </form>
+  <h1>Soumission Rejetée</h1>
+  <p>Votre soumission a été rejetée. Vous allez être redirigé sous peu.</p>
 </body>
 <script>
+  // Extraire les paramètres de l'URL
   const urlParams = new URLSearchParams(window.location.search);
-  document.getElementById('city').value = urlParams.get('city');
-  document.getElementById('name').value = urlParams.get('name');
-  document.getElementById('profession').value = urlParams.get('profession');
+  const city = urlParams.get('city');
+  const name = urlParams.get('name');
+  const profession = urlParams.get('profession');
 
-  document.getElementById('rejectForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const reason = document.getElementById('reason').value;
-    const city = document.getElementById('city').value;
-    const name = document.getElementById('name').value;
-    const profession = document.getElementById('profession').value;
+  // Demander la raison du rejet
+  const reason = prompt("Veuillez entrer la raison du rejet:");
 
-    // URL of the Google Form pre-filled link
-    const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLSd89qaADS2Wj4eS-KDofOAr0BoJZ9v9rEOQVgzVQaexjCBeew/viewform?usp=pp_url&entry.831971965=${encodeURIComponent(city)}&entry.2070939935=${encodeURIComponent(name)}&entry.1866930758=${encodeURIComponent(profession)}&entry.350169679=${encodeURIComponent(reason)}`;
+  // URL du formulaire Google pré-rempli (mais ne pas rediriger l'utilisateur)
+  const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLSd89qaADS2Wj4eS-KDofOAr0BoJZ9v9rEOQVgzVQaexjCBeew/formResponse?entry.831971965=${encodeURIComponent(city)}&entry.2070939935=${encodeURIComponent(name)}&entry.1866930758=${encodeURIComponent(profession)}&entry.350169679=${encodeURIComponent(reason)}`;
 
-    window.location.href = formUrl;
-  });
+  // Soumettre le formulaire en arrière-plan
+  fetch(formUrl, { method: 'POST', mode: 'no-cors' })
+    .then(() => {
+      console.log('Form submitted');
+    });
+
+  // Redirection optionnelle vers une page de confirmation après un délai
+  setTimeout(function() {
+    window.location.href = 'confirmation.html';
+  }, 3000); // 3 secondes de délai
 </script>
 </html>
 

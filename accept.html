@@ -3,22 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Submission Accepted</title>
+  <title>Soumission Acceptée</title>
 </head>
 <body>
-  <h1>Submission Accepted</h1>
-  <p>Your submission has been accepted.</p>
+  <h1>Soumission Acceptée</h1>
+  <p>Votre soumission a été acceptée. Merci!</p>
 </body>
 <script>
+  // Extraire les paramètres de l'URL
   const urlParams = new URLSearchParams(window.location.search);
   const city = urlParams.get('city');
   const name = urlParams.get('name');
   const profession = urlParams.get('profession');
 
-  // URL of the Google Form pre-filled link
-  const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLScPWMBNqzoEAxpfGOd1-RmutIN2vIO9mayOzyxVjB6M3vqGpg/viewform?usp=pp_url&entry.1591435541=${city}&entry.649535891=${name}&entry.1203927229=${profession}&entry.917535634=Accepted`;
+  // URL du formulaire Google pré-rempli (mais ne pas rediriger l'utilisateur)
+  const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLScPWMBNqzoEAxpfGOd1-RmutIN2vIO9mayOzyxVjB6M3vqGpg/formResponse?entry.1591435541=${encodeURIComponent(city)}&entry.649535891=${encodeURIComponent(name)}&entry.1203927229=${encodeURIComponent(profession)}&entry.917535634=Acceptée`;
 
-  window.location.href = formUrl;
+  // Soumettre le formulaire en arrière-plan
+  fetch(formUrl, { method: 'POST', mode: 'no-cors' })
+    .then(() => {
+      console.log('Form submitted');
+    });
+
+  // Redirection optionnelle vers une page de confirmation après un délai
+  setTimeout(function() {
+    window.location.href = 'confirmation.html';
+  }, 3000); // 3 secondes de délai
 </script>
 </html>
 
