@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Soumission Rejetée</title>
-   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Soumission Rejetée</h1>
@@ -16,23 +16,32 @@
   const city = urlParams.get('city');
   const name = urlParams.get('name');
   const profession = urlParams.get('profession');
+  const email = urlParams.get('email'); // Assurez-vous que l'email du validateur est passé
 
   // Demander la raison du rejet
   const reason = prompt("Veuillez entrer la raison du rejet:");
 
-  // URL du formulaire Google pré-rempli (mais ne pas rediriger l'utilisateur)
-  const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLSd89qaADS2Wj4eS-KDofOAr0BoJZ9v9rEOQVgzVQaexjCBeew/formResponse?entry.831971965=${encodeURIComponent(city)}&entry.2070939935=${encodeURIComponent(name)}&entry.1866930758=${encodeURIComponent(profession)}&entry.350169679=${encodeURIComponent(reason)}`;
+  // Vérifier que la raison a été fournie
+  if (reason) {
+    // URL du formulaire Google pré-rempli
+    const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLSd89qaADS2Wj4eS-KDofOAr0BoJZ9v9rEOQVgzVQaexjCBeew/formResponse?entry.332646971=${encodeURIComponent(email)}&entry.831971965=${encodeURIComponent(city)}&entry.2070939935=${encodeURIComponent(name)}&entry.1866930758=${encodeURIComponent(profession)}&entry.350169679=${encodeURIComponent(reason)}&entry.1448394102=Rejeté&entry.1444065116=${encodeURIComponent(reason)}`;
 
-  // Soumettre le formulaire en arrière-plan
-  fetch(formUrl, { method: 'POST', mode: 'no-cors' })
-    .then(() => {
-      console.log('Form submitted');
-    });
+    // Soumettre le formulaire en arrière-plan
+    fetch(formUrl, { method: 'POST', mode: 'no-cors' })
+      .then(() => {
+        console.log('Form submitted');
+      })
+      .catch((error) => {
+        console.error('Error submitting form:', error);
+      });
 
-  // Redirection optionnelle vers une page de confirmation après un délai
-  setTimeout(function() {
-    window.location.href = 'confirmation.html';
-  }, 3000); // 3 secondes de délai
+    // Redirection vers une page de confirmation après un délai
+    setTimeout(function() {
+      window.location.href = 'confirmation.html';
+    }, 3000); // 3 secondes de délai
+  } else {
+    console.error('La raison du rejet est requise.');
+  }
 </script>
 </html>
 
