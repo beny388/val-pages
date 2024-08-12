@@ -11,29 +11,25 @@
   <p>Votre soumission a été acceptée. Merci!</p>
 </body>
 <script>
-  // Extraire les paramètres de l'URL
   const urlParams = new URLSearchParams(window.location.search);
   const city = urlParams.get('city');
   const name = urlParams.get('name');
   const profession = urlParams.get('profession');
-  const email = urlParams.get('email'); // Assurez-vous que l'email du validateur est passé
 
-  // URL du formulaire Google pré-rempli
-  const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLScPWMBNqzoEAxpfGOd1-RmutIN2vIO9mayOzyxVjB6M3vqGpg/formResponse?entry.1591435541=${encodeURIComponent(city)}&entry.649535891=${encodeURIComponent(name)}&entry.1203927229=${encodeURIComponent(profession)}&entry.917535634=${encodeURIComponent(profession)}&entry.866265750=Acceptée`;
+  const scriptUrl = "https://script.google.com/macros/s/your-script-id/exec"; // Remplacez par l'URL de déploiement de votre script
+  const dataUrl = `${scriptUrl}?city=${encodeURIComponent(city)}&name=${encodeURIComponent(name)}&profession=${encodeURIComponent(profession)}`;
 
-  // Soumettre le formulaire en arrière-plan
-  fetch(formUrl, { method: 'POST', mode: 'no-cors' })
+  fetch(dataUrl, { method: 'GET', mode: 'no-cors' })
     .then(() => {
-      console.log('Form submitted');
+      console.log('Données soumises au script');
     })
     .catch((error) => {
-      console.error('Error submitting form:', error);
+      console.error('Erreur lors de la soumission des données:', error);
     });
 
-  // Redirection optionnelle vers une page de confirmation après un délai
   setTimeout(function() {
     window.location.href = 'confirmation.html';
-  }, 3000); // 3 secondes de délai
+  }, 3000);
 </script>
 </html>
 
