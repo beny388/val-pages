@@ -16,7 +16,7 @@
   const name = urlParams.get('name');
   const profession = urlParams.get('profession');
 
-  const scriptUrl = "https://script.google.com/macros/s/your-script-id/exec"; // Remplacez par l'URL de déploiement de votre script
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbx3TYZ9BHCvXoNJUnpkaXnaU80Xzpj8uuEfktGmS3-CRcQbMNIolLcleRBZGb420yhg/exec";
   const dataUrl = `${scriptUrl}?city=${encodeURIComponent(city)}&name=${encodeURIComponent(name)}&profession=${encodeURIComponent(profession)}`;
 
   fetch(dataUrl, { method: 'GET', mode: 'no-cors' })
